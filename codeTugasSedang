@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void clearScreen() { 
+	system("clear");
+}
+
+void loadingBar() {
+	printf("Proses sedang berjalan: [");
+	fflush(stdout);
+	for (int i=0; i < 10; ++i){
+		printf("*");
+		fflush(stdout);
+		usleep(50000);	
+	}
+	printf ("]\n\n");
+}
+
+void pauseReturn() {
+	printf("Tekan Enter untuk kembali ke menu...");
+	getchar();
+}
+
+void showMenu() {
+	printf("\n");
+	printf("==========================================\n");
+	printf("             SILAHKAN DIPILIH           \n");
+	printf("==========================================\n");
+	printf("1. Tampilkan Kehidupan Saat Ini\n");
+	printf("2. Tampilkan Daftar Direktori\n");
+	printf("3. Informasi Jaringan\n");
+	printf("4. Tampilkan Detail OS\n");
+	printf("5. Tampilkan Waktu Install Pertama OS\n");
+	printf("6. Informasi User\n");
+	printf("7. Keluar\n");
+	printf("==========================================\n");
+	printf("Pilih Opsi [1-7]: ");
+}
+
+void detailIOS(){
+	printf("================ Informasi Detail OS ================\n");
+	system("echo OS			: $(uname -s)\n");
+	system("echo Versi Kernel	: $(uname -r)\n");
+	system("echo Arsitektur		: $(uname -m)\n");
+	system("echo Hostname		: $(hostname)\n");  
+	system("echo Version		: $(uname -v)\n");
+	system("echo Processor		: $(uname -p)\n");
+}
+
+void waktuInstall(){
+	printf("Tanggal Instalasi Pertama OS:\n");
+	system("sudo tune2fs -l $(df / | tail -1 | awk '{print $1}') | grep 'Filesystem created' ");
+}
+
+void informasiUser() {
+	printf("Informasi Pengguna Saat Ini:\n");
+	system("echo Username		: $(whoami)\n");
+	system("echo User ID		: $(id -u)\n");
+	system("echo Group ID		: $(id -g)\n");
+	system("echo Nama Lengkap	: $(getent pass &(whoami)\n");
+	system("echo Shell		: $SHELL\n");
+	system("echo Home Directory	: $HOME\n\n");
+}
+
+
+void showCat() {
+	printf("\n");
+    printf("     /\\_/\\  \n");
+    printf("    ( o.o )   Welcome!\n");
+    printf("     > ^ <  \n");
+    }
+
+void showCatGoodbye() {
+    printf("\n     /\\_/\\  \n");
+    printf("    ( -.- )   Bye Bye!\n");
+    printf("     > ^ <    Keluar dari Program..\n");
+}
+
+
+int main() {
+	int pilihan;
+	
+	do{
+		clearScreen();
+		showCat();
+		showMenu();
+		scanf("%d", &pilihan);
+		getchar();
+		loadingBar();
+		
+		switch (pilihan) {
+			case 1:
+				system ("date");
+				break;
+			case 2:
+				system("ls -lhA");
+				break;
+			case 3:
+				system("ip a");
+				break;
+			case 4: detailIOS();
+				break;
+			case 5:
+				waktuInstall();
+				break;
+			case 6: informasiUser();
+				break;
+			case 7: 
+				showCatGoodbye();
+				break;
+			default:
+				printf("Pilihan tidak valid!");
+		} if (pilihan != 7) pauseReturn();
+		
+	}while (pilihan != 7);
+	return 0;
+}
