@@ -62,8 +62,6 @@ void informasiUser() {
 	system("echo Shell		: $SHELL\n");
 	system("echo Home Directory	: $HOME\n\n");
 }
-
-
 void showCat() {
 	printf("\n");
     printf("     /\\_/\\  \n");
@@ -96,17 +94,14 @@ int main() {
 			case 2:
 				system("ls -lhA");
 				break;
-			case 3:
-				system("ip a");
+			case 3: detailIOS();
 				break;
-			case 4: detailIOS();
-				break;
-			case 5:
+			case 4:
 				waktuInstall();
 				break;
-			case 6: informasiUser();
+			case 5: informasiUser();
 				break;
-			case 7: 
+			case 6: 
 				showCatGoodbye();
 				break;
 			default:
